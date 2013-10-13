@@ -1,0 +1,162 @@
+﻿<WorkflowService mc:Ignorable="sap" ConfigurationName="Service1" sap:VirtualizedContainerService.HintSize="848,536" Name="Service1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:p="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:s1="clr-namespace:System;assembly=System" xmlns:s2="clr-namespace:System;assembly=System.Xml" xmlns:s3="clr-namespace:System;assembly=System.Core" xmlns:s4="clr-namespace:System;assembly=System.ServiceModel" xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities" xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System" xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=System.ServiceModel" xmlns:scg2="clr-namespace:System.Collections.Generic;assembly=System.Core" xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:sl="clr-namespace:System.Linq;assembly=System.Core" xmlns:ssa="clr-namespace:System.ServiceModel.Activities;assembly=System.ServiceModel.Activities" xmlns:ssx="clr-namespace:System.ServiceModel.XamlIntegration;assembly=System.ServiceModel" xmlns:st="clr-namespace:System.Text;assembly=mscorlib" xmlns:w="clr-namespace:WCFHostForWF1;assembly=WCFHostForWF1" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <p:Parallel sad:XamlDebuggerXmlReader.FileName="c:\users\guillem\documents\visual studio 2010\Projects\WCFHostForWF1\WCFHostForWF1\Service1.xamlx" sap:VirtualizedContainerService.HintSize="818,506" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+    <p:Parallel.Variables>
+      <p:Variable x:TypeArguments="w:WFTicketModel" Default="[New WFTicketModel()]" Name="varTicketMessage" />
+      <p:Variable x:TypeArguments="CorrelationHandle" Name="handleTicketId" />
+      <p:Variable x:TypeArguments="x:Int32" Default="-1" Name="globalStatus" />
+      <p:Variable x:TypeArguments="s:Guid" Name="varTicketId" />
+      <p:Variable x:TypeArguments="x:Boolean" Default="False" Name="varWorkFlowComplete" />
+    </p:Parallel.Variables>
+    <p:Flowchart sap:VirtualizedContainerService.HintSize="200,460">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+          <av:Size x:Key="ShapeSize">60,75</av:Size>
+          <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,104.5</av:PointCollection>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <p:Flowchart.StartNode>
+        <x:Reference>__ReferenceID3</x:Reference>
+      </p:Flowchart.StartNode>
+      <p:FlowStep x:Name="__ReferenceID3">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,104.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,155.5 300,174.5</av:PointCollection>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <p:Sequence DisplayName="Open ticket" sap:VirtualizedContainerService.HintSize="200,51">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Receive x:Name="__ReferenceID0" CanCreateInstance="True" DisplayName="Receive Open Ticket" sap:VirtualizedContainerService.HintSize="255,90" OperationName="OpenTicket" ServiceContractName="ITicket">
+            <Receive.CorrelationInitializers>
+              <RequestReplyCorrelationInitializer CorrelationHandle="[handleTicketId]" />
+            </Receive.CorrelationInitializers>
+          </Receive>
+          <p:Assign DisplayName="Assign ticket Id" sap:VirtualizedContainerService.HintSize="255,58">
+            <p:Assign.To>
+              <p:OutArgument x:TypeArguments="s:Guid">[varTicketId]</p:OutArgument>
+            </p:Assign.To>
+            <p:Assign.Value>
+              <p:InArgument x:TypeArguments="s:Guid">[Guid.NewGuid()]</p:InArgument>
+            </p:Assign.Value>
+          </p:Assign>
+          <p:Assign sap:VirtualizedContainerService.HintSize="255,58">
+            <p:Assign.To>
+              <p:OutArgument x:TypeArguments="x:Int32">[globalStatus]</p:OutArgument>
+            </p:Assign.To>
+            <p:Assign.Value>
+              <p:InArgument x:TypeArguments="x:Int32">1</p:InArgument>
+            </p:Assign.Value>
+          </p:Assign>
+          <SendReply Request="{x:Reference __ReferenceID0}" DisplayName="SendReplyToReceive" sap:VirtualizedContainerService.HintSize="255,90">
+            <SendReply.CorrelationInitializers>
+              <QueryCorrelationInitializer CorrelationHandle="[handleTicketId]">
+                <XPathMessageQuery x:Key="key1">
+                  <XPathMessageQuery.Namespaces>
+                    <ssx:XPathMessageContextMarkup>
+                      <x:String x:Key="xgSc">http://tempuri.org/</x:String>
+                    </ssx:XPathMessageContextMarkup>
+                  </XPathMessageQuery.Namespaces>sm:body()/xgSc:OpenTicketResponse/xgSc:TicketId</XPathMessageQuery>
+              </QueryCorrelationInitializer>
+            </SendReply.CorrelationInitializers>
+            <SendParametersContent>
+              <p:InArgument x:TypeArguments="s:Guid" x:Key="TicketId">[varTicketId]</p:InArgument>
+            </SendParametersContent>
+          </SendReply>
+        </p:Sequence>
+        <p:FlowStep.Next>
+          <p:FlowStep x:Name="__ReferenceID1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <av:Point x:Key="ShapeLocation">200,174.5</av:Point>
+                <av:Size x:Key="ShapeSize">200,51</av:Size>
+                <av:PointCollection x:Key="ConnectorLocation">300,225.5 300,281</av:PointCollection>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <p:Sequence DisplayName="In Progress" sap:VirtualizedContainerService.HintSize="277,214">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Receive CorrelatesWith="[handleTicketId]" DisplayName="Put In Progress" sap:VirtualizedContainerService.HintSize="255,90" OperationName="PutInProgress" ServiceContractName="ITicket">
+                <Receive.CorrelatesOn>
+                  <XPathMessageQuery x:Key="key1">
+                    <XPathMessageQuery.Namespaces>
+                      <ssx:XPathMessageContextMarkup>
+                        <x:String x:Key="xgSc">http://tempuri.org/</x:String>
+                      </ssx:XPathMessageContextMarkup>
+                    </XPathMessageQuery.Namespaces>sm:body()/xgSc:PutInProgress/xgSc:TicketId</XPathMessageQuery>
+                </Receive.CorrelatesOn>
+                <ReceiveParametersContent>
+                  <p:OutArgument x:TypeArguments="s:Guid" x:Key="TicketId" />
+                </ReceiveParametersContent>
+              </Receive>
+            </p:Sequence>
+            <p:FlowStep.Next>
+              <p:FlowStep x:Name="__ReferenceID2">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                    <av:Point x:Key="ShapeLocation">179,281</av:Point>
+                    <av:Size x:Key="ShapeSize">242,58</av:Size>
+                  </scg3:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <p:Assign sap:VirtualizedContainerService.HintSize="242,58">
+                  <p:Assign.To>
+                    <p:OutArgument x:TypeArguments="x:Int32">[globalStatus]</p:OutArgument>
+                  </p:Assign.To>
+                  <p:Assign.Value>
+                    <p:InArgument x:TypeArguments="x:Int32">2</p:InArgument>
+                  </p:Assign.Value>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg3:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </p:Assign>
+              </p:FlowStep>
+            </p:FlowStep.Next>
+          </p:FlowStep>
+        </p:FlowStep.Next>
+      </p:FlowStep>
+      <x:Reference>__ReferenceID1</x:Reference>
+      <x:Reference>__ReferenceID2</x:Reference>
+    </p:Flowchart>
+    <p:While sap:VirtualizedContainerService.HintSize="464,460" Condition="[varWorkFlowComplete = False]">
+      <p:Sequence sap:VirtualizedContainerService.HintSize="438,344">
+        <p:Sequence.Variables>
+          <p:Variable x:TypeArguments="CorrelationHandle" Name="__handle1" />
+        </p:Sequence.Variables>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Receive x:Name="__ReferenceID4" CorrelatesWith="[handleTicketId]" sap:VirtualizedContainerService.HintSize="255,90" OperationName="CheckStatus" ServiceContractName="ITicket">
+          <Receive.CorrelatesOn>
+            <XPathMessageQuery x:Key="key1">
+              <XPathMessageQuery.Namespaces>
+                <ssx:XPathMessageContextMarkup>
+                  <x:String x:Key="xgSc">http://tempuri.org/</x:String>
+                </ssx:XPathMessageContextMarkup>
+              </XPathMessageQuery.Namespaces>sm:body()/xgSc:CheckStatus/xgSc:TicketId</XPathMessageQuery>
+          </Receive.CorrelatesOn>
+          <ReceiveParametersContent>
+            <p:OutArgument x:TypeArguments="s:Guid" x:Key="TicketId" />
+          </ReceiveParametersContent>
+        </Receive>
+        <SendReply Request="{x:Reference __ReferenceID4}" DisplayName="SendReplyToReceive" sap:VirtualizedContainerService.HintSize="255,90">
+          <SendParametersContent>
+            <p:InArgument x:TypeArguments="x:Int32" x:Key="Status">[globalStatus]</p:InArgument>
+          </SendParametersContent>
+        </SendReply>
+      </p:Sequence>
+    </p:While>
+  </p:Parallel>
+</WorkflowService>
