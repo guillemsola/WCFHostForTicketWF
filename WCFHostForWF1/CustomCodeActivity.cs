@@ -42,7 +42,7 @@ namespace WCFHostForWF1
         {
             // Obtain the runtime value of the Text input argument
             var text = context.GetValue(this.Text);
-            Debug.Print(string.Format("Changing WF status{0}", text));
+            Debug.Print(string.Format("Changing WF status {0}", text));
         }
 
         #endregion
